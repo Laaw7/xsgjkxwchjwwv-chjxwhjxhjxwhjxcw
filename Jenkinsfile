@@ -19,11 +19,12 @@ pipeline {
                 echo 'Deploying application'
             }
         }
-        stage("Build & Analyse avec SonarQube") {
-            agent any
+        stage("SonarQube") {
             steps {
                 script {
-                    sh 'mvn clean package sonar:sonar'
+                    withSonarQubeEnv('SonarQube_Local') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
                 }
             }
         }
